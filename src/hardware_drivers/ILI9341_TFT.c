@@ -202,8 +202,45 @@ void ILI9341_GetData(uint8_t *InDataBuffer, uint32_t length){
 void ILI9341_SetScreenOrientation(ILI9341_ScreenOrientation_t Orientation){
     ILI9341_SendCommand(ILI9341_MADCTL);
     ILI9341_SendByte(Orientation);
-    SCREEN_HEIGHT = 240;
-    SCREEN_WIDTH = 320;
+    switch(Orientation){
+        case Normal:
+            SCREEN_HEIGHT = 320;
+            SCREEN_WIDTH = 240;
+            break;
+        case YMirror:
+            SCREEN_HEIGHT = 240;
+            SCREEN_WIDTH = 320;
+            break;
+        case XMirror:
+            SCREEN_HEIGHT = 320;
+            SCREEN_WIDTH = 240;
+            break;
+        case XYMirror:
+            SCREEN_HEIGHT = 240;
+            SCREEN_WIDTH = 320;
+            break;
+        case XYExchange:
+            SCREEN_HEIGHT = 320;
+            SCREEN_WIDTH = 240;
+            break;
+        case XYExchangeYMirror:
+            SCREEN_HEIGHT = 240;
+            SCREEN_WIDTH = 320;
+            break;
+        case XYExchangeXMirror:
+            SCREEN_HEIGHT = 320;
+            SCREEN_WIDTH = 240;
+            break;
+        case XYExchangeXYMirror:
+            SCREEN_HEIGHT = 240;
+            SCREEN_WIDTH = 320;
+            break;
+        default:
+            SCREEN_HEIGHT = 240;
+            SCREEN_WIDTH = 320;
+            break;
+    }
+
 }
 
 void ILI9341_DrawPixel(ILI9341_Color_t Color, ILI9341_Coordinate_t Position){
@@ -292,7 +329,7 @@ void ILI9341_DisplayImage(ILI9341_Image_t Image){
     ILI9341_Coordinate_t CoordinateEnd = {.X = 319, .Y = 179};
     ILI9341_SetCoordinates(CoordinateStart,CoordinateEnd);
     ILI9341_SendCommand(ILI9341_RAMWR);
-    for(uint32_t i = Image.ImageLength - 1; i > 0x36; i--){
+    for(uint32_t i = 0x36; i < Image.ImageLength; i++){
         ILI9341_SendByte(Image.ImageData[i]);
     }
 }
