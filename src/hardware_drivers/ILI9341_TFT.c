@@ -357,3 +357,11 @@ void ILI9341_DrawLine(ILI9341_Color_t Color, ILI9341_Coordinate_t Start, ILI9341
     Iter.Y = Start.Y + (End.Y - Start.Y)*Iter.X / (End.X - Start.X);
     }while(Iter.X <= End.X);
 }
+
+void ILI9341_DrawVLine(ILI9341_Color_t Color, int16_t StartX, int16_t EndY){
+    ILI9341_Coordinate_t Iter = {StartX, 0};
+    do{
+    ILI9341_DrawPixel(Color, Iter);
+    Iter.Y++;
+    }while(Iter.Y <= EndY);
+}

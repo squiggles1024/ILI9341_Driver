@@ -181,5 +181,13 @@ int main(){
   ILI9341_Coordinate_t End3 = {Width,0};
   ILI9341_DrawLine(Color3, Start3, End3);
 
+  ILI9341_Color_t Color4 = {255,0,0};
+  ILI9341_Coordinate_t Start4 = {0,Height/2};
+  ILI9341_Coordinate_t End4 = {Width,Height/2};
+  ILI9341_DrawLine(Color4, Start4, End4);
+
+  ILI9341_Color_t Color5 = {0,255,0};
+  ILI9341_DrawVLine(Color5, Width/2, Height);
+
   while(1);
 }
