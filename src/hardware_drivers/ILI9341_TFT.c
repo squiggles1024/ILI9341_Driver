@@ -348,3 +348,12 @@ void ILI9341_ImageOpen(const uint8_t *BitmapFile, ILI9341_Image_t *Image){
   Image->Height = CAST_AND_DEREFERENCE_32bitPtr(BitmapFile[0x16]);
   Image->ImageData = (&BitmapFile[0x36]);
 }
+
+void ILI9341_DrawLine(ILI9341_Color_t Color, ILI9341_Coordinate_t Start, ILI9341_Coordinate_t End){
+    ILI9341_Coordinate_t Iter = {Start.X, Start.Y};
+    do{
+    ILI9341_DrawPixel(Color, Iter);
+    Iter.X++;
+    Iter.Y = Start.Y + (End.Y - Start.Y)*Iter.X / (End.X - Start.X);
+    }while(Iter.X <= End.X);
+}

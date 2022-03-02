@@ -189,5 +189,6 @@ void ILI9341_DisplayImage(ILI9341_Image_t Image);
 void ILI9341_DrawRectangle(uint16_t width, uint16_t height, ILI9341_Coordinate_t Middle, ILI9341_Color_t Color);
 void ILI9341_FillSceen(ILI9341_Color_t Color);
 void ILI9341_ImageOpen(const uint8_t *BitmapFile, ILI9341_Image_t *Image);
+void ILI9341_DrawLine(ILI9341_Color_t Color, ILI9341_Coordinate_t Start, ILI9341_Coordinate_t End);
 
 #endif

@@ -56,7 +56,7 @@ int main_test_DrawPixel(void)
  
 }
 
-int main_test_FillScreen(void)
+int main_fill_screen_test(void)
 {
   HAL_Init();
   SystemClock_Config();
@@ -147,7 +147,7 @@ int main_testRectangleOffScreen(void)
   }
 }
 
-int main(){
+int main_test_image(){
   HAL_Init();
   SystemClock_Config();
   ILI9341_Init();
@@ -156,4 +156,30 @@ int main(){
   ILI9341_DisplayImage(MyPic);
   while(1){
   }
+}
+
+int main(){
+  HAL_Init();
+  SystemClock_Config();
+  ILI9341_Init();
+
+  uint16_t Width = ILI9341_GetScreenWidth() - 1;
+  uint16_t Height = ILI9341_GetScreenHeight() - 1;
+
+  ILI9341_Color_t Color1 = {0,255,0};
+  ILI9341_Coordinate_t Start1 = {0,Height/2};
+  ILI9341_Coordinate_t End1 = {Width, Height};
+  ILI9341_DrawLine(Color1, Start1, End1);
+  
+  ILI9341_Color_t Color2 = {255,0,0};
+  ILI9341_Coordinate_t Start2 = {0,0};
+  ILI9341_Coordinate_t End2 = {Width / 2, Height / 2};
+  ILI9341_DrawLine(Color2, Start2, End2);
+
+  ILI9341_Color_t Color3 = {0,0,255};
+  ILI9341_Coordinate_t Start3 = {0,Height};
+  ILI9341_Coordinate_t End3 = {Width,0};
+  ILI9341_DrawLine(Color3, Start3, End3);
+
+  while(1);
 }
