@@ -19,6 +19,7 @@ static void ILI9341_SetCoordinates(ILI9341_Coordinate_t StartCorner, ILI9341_Coo
 static ImageDimensionValidity_t ValidateCoordinates(ILI9341_Coordinate_t StartCorner, ILI9341_Coordinate_t EndCorner);
 static int16_t SCREEN_HEIGHT;
 static int16_t SCREEN_WIDTH;
+static ILI9341_Coordinate_t Cursor;
 
 /******************************************************************
  *@brief: Initializes the LCD Hardware and prepares it to receive image data
@@ -364,4 +365,59 @@ void ILI9341_DrawVLine(ILI9341_Color_t Color, int16_t StartX, int16_t EndY){
     ILI9341_DrawPixel(Color, Iter);
     Iter.Y++;
     }while(Iter.Y <= EndY);
+}
+
+#define PixelNumberToHeightPosition(x) ((x) / font.Width)
+#define PixelNumberToWidthPosition(x)  ((x) % font.Width)
+
+void ILI9341_PrintText(uint8_t *text, sFONT font, ILI9341_Color_t Color){
+    uint32_t BytesToParse = (font.Height / 8) * font.Height;
+    uint8_t Bitmap = 0x00;
+    uint8_t Character = *text;
+
+    ILI9341_Coordinate_t Cursor_Offset;
+    ILI9341_Color_t BlackColor = {0,0,0};
+
+    while(Character != '\0'){
+        Cursor_Offset.X = Cursor.X;
+        Cursor_Offset.Y = Cursor.Y;
+
+                                       //Char * FontByteSlope           + Offset
+        for(uint32_t HeightIter = 0; HeightIter < font.Height; HeightIter++){
+  
+            for(uint32_t WidthIter = 0; WidthIter < font.Width; WidthIter++){
+                Bitmap = font.table[(Character - 32) * BytesToParse + ((HeightIter*((font.Width / 8) + 1))) + WidthIter / 8];
+
+                if(((Bitmap >> ((7 - WidthIter) % 8)) & 0x01) == 0x01){
+                    ILI9341_DrawPixel(Color,Cursor_Offset);
+                } else {
+                    ILI9341_DrawPixel(BlackColor,Cursor_Offset);
+                }
+                Cursor_Offset.X++;
+                if( (Cursor_Offset.X - Cursor.X) >= font.Width){
+                    Cursor_Offset.X = Cursor.X;
+                    Cursor_Offset.Y++;
+            }
+
+            }
+            //Update cursor
+
+        }
+
+    Cursor.X = Cursor.X + font.Width;
+    if(Cursor.X >= SCREEN_WIDTH){
+        Cursor.X = 0;
+        Cursor.Y = Cursor.Y + font.Height;
+    }
+    text++;
+    Character = *text;
+    }
+}
+
+void ILI9341_SetCursor(ILI9341_Coordinate_t Position){
+    Cursor.X = Position.X;
+    Cursor.Y = Position.Y;
+}
+ILI9341_Coordinate_t ILI9341_GetCursor(void){
+    return Cursor;
 }

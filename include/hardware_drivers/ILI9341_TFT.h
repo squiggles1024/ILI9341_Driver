@@ -5,7 +5,7 @@
  * Includes
  ****************************************************************/
 #include <stdint.h>
-
+#include <fonts.h>
 /****************************************************************
  * Defines
  ****************************************************************/
@@ -184,12 +184,14 @@ int16_t ILI9341_GetScreenWidth();
 int16_t ILI9341_GetScreenHeight();
 
 void ILI9341_DrawPixel(ILI9341_Color_t Color, ILI9341_Coordinate_t Position);
-void ILI9341_PrintText(uint8_t *text, ILI9341_FontSize_t FontSize, ILI9341_Coordinate_t Cursor, ILI9341_Color_t Color);
+void ILI9341_PrintText(uint8_t *text, sFONT font, ILI9341_Color_t Color);
 void ILI9341_DisplayImage(ILI9341_Image_t Image);
 void ILI9341_DrawRectangle(uint16_t width, uint16_t height, ILI9341_Coordinate_t Middle, ILI9341_Color_t Color);
 void ILI9341_FillSceen(ILI9341_Color_t Color);
 void ILI9341_ImageOpen(const uint8_t *BitmapFile, ILI9341_Image_t *Image);
 void ILI9341_DrawLine(ILI9341_Color_t Color, ILI9341_Coordinate_t Start, ILI9341_Coordinate_t End);
 void ILI9341_DrawVLine(ILI9341_Color_t Color, int16_t StartX, int16_t EndY);
+void ILI9341_SetCursor(ILI9341_Coordinate_t Position);
+ILI9341_Coordinate_t ILI9341_GetCursor(void);
 
 #endif

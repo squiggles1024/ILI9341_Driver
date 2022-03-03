@@ -158,7 +158,7 @@ int main_test_image(){
   }
 }
 
-int main(){
+int main_test_lines(){
   HAL_Init();
   SystemClock_Config();
   ILI9341_Init();
@@ -189,5 +189,15 @@ int main(){
   ILI9341_Color_t Color5 = {0,255,0};
   ILI9341_DrawVLine(Color5, Width/2, Height);
 
+  while(1);
+}
+
+int main(){
+  HAL_Init();
+  SystemClock_Config();
+  ILI9341_Init();
+  ILI9341_Color_t Color = {0,255,0};
+  uint8_t *MyMsg = "Hello, World, Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat , Repeat ,";
+  ILI9341_PrintText(MyMsg,Font12,Color);
   while(1);
 }
